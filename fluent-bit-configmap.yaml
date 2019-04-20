@@ -50,28 +50,12 @@ data:
         Operation lift
         Nested_under kubernetes
     
-    # Rename and add fields to be valid against the GELF format.
-    # See http://docs.graylog.org/en/2.5/pages/gelf.html
-    [FILTER]
-        Name modify
-        Match *
-        Rename log short_message
-        Rename date timestamp
-        Rename stream _stream
-        Rename timestamp _timestamp
-        Rename pod_name _k8s_pod_name
-        Rename namespace_name _k8s_namespace_name
-        Rename pod_id _k8s_pod_id
-        Rename labels _k8s_labels
-        Rename container_name _k8s_container_name
-        Rename docker_id _docker_id
-        Add version 1.1
-    
-    # Remove useless fields
+    # Remove offending fields, see: https://github.com/fluent/fluent-bit/issues/1291
     [FILTER]
         Name record_modifier
         Match *
         Remove_key annotations
+        Remove_key labels
 
   output-graylog.conf: |
     [OUTPUT]
