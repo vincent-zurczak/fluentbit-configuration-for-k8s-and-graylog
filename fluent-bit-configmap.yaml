@@ -52,11 +52,11 @@ data:
     
     # Rename and add fields to be valid against the GELF format.
     # See http://docs.graylog.org/en/2.5/pages/gelf.html
-    # Keep the "time" field, as it is not a timestamp.
     [FILTER]
         Name modify
         Match *
         Rename log short_message
+        Rename date timestamp
         Rename stream _stream
         Rename timestamp _timestamp
         Rename pod_name _k8s_pod_name
@@ -94,7 +94,6 @@ data:
         Format      json
         Time_Key    time
         Time_Format %Y-%m-%dT%H:%M:%S.%L
-        Time_Keep   On
         # Command      |  Decoder | Field | Optional Action
         # =============|==================|=================
         Decode_Field_As   escaped    log
