@@ -40,7 +40,7 @@ data:
         Kube_URL            https://kubernetes.default.svc.cluster.local:443
         Merge_Log           On
         K8S-Logging.Parser  On
-    
+
     # ${HOSTNAME} returns the host name.
     # But Fluentbit runs in a container. So, it is not meaningful.
     # Instead, copy the host name from the Kubernetes object.
@@ -49,7 +49,7 @@ data:
         Match *
         Operation lift
         Nested_under kubernetes
-    
+
     # Remove offending fields, see: https://github.com/fluent/fluent-bit/issues/1291
     [FILTER]
         Name record_modifier
@@ -64,7 +64,7 @@ data:
         Host          192.168.1.18
         Port          12201
         Mode          tcp
-        Gelf_Short_Message_Key short_message
+        Gelf_Short_Message_Key log
 
   parsers.conf: |
     [PARSER]
